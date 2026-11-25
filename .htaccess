@@ -1,0 +1,15 @@
+RewriteEngine On
+
+# Let real files/directories resolve normally.
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Everything else falls back to index.html so React Router can handle
+# client-side routes (e.g. a hard refresh).
+RewriteRule ^ index.html [L]
+
+# Never expose configuration files, if one is ever added.
+<FilesMatch "^\.config\.json$">
+  Require all denied
+</FilesMatch>
